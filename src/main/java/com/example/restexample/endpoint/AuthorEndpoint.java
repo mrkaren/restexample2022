@@ -26,7 +26,6 @@ public class AuthorEndpoint {
         return authorMapper.map(authorRepository.findAll());
     }
 
-
     @PostMapping("/authors")
     public ResponseEntity<?> createAuthor(@RequestBody CreateAuthorDto createAuthorDto) {
         Author savedAuthor = authorRepository.save(authorMapper.map(createAuthorDto));

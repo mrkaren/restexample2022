@@ -29,10 +29,7 @@ public class BookEndpoint {
     @GetMapping("/books/{id}")
     public ResponseEntity<Book> getBookById(@PathVariable("id") int id) {
         Optional<Book> byId = bookRepository.findById(id);
-        if (byId.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(byId.get());
+        return byId.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping("/books")
