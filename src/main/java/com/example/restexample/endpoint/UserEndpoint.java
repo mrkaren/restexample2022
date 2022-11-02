@@ -9,6 +9,7 @@ import com.example.restexample.model.User;
 import com.example.restexample.repository.UserRepository;
 import com.example.restexample.util.JwtTokenUtil;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,6 +21,7 @@ import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
+@Slf4j
 public class UserEndpoint {
 
     private final UserRepository userRepository;
@@ -47,6 +49,7 @@ public class UserEndpoint {
         if (byEmail.isPresent()) {
             User user = byEmail.get();
             if (passwordEncoder.matches(userAuthDto.getPassword(), user.getPassword())) {
+                log.info("User with username {} get auth token", user.getEmail());
                 return ResponseEntity.ok(UserAuthResponseDto.builder()
                         .token(jwtTokenUtil.generateToken(user.getEmail()))
                         .user(userMapper.map(user))
