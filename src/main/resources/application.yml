@@ -3,6 +3,9 @@ spring:
     url: jdbc:mysql://localhost:3306/author_book_rest
     username: root
     password: root
+  mvc:
+    pathmatch:
+      matching-strategy: ant-path-matcher
 
 jwt:
   secret: k205j@dkjf0%^@
@@ -21,3 +24,6 @@ logging:
   level:
     root: info
     com.example: info
+
+cb:
+  url: https://cb.am/latest.json.php

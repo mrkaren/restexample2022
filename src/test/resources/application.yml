@@ -1,0 +1,17 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/author_book_rest
+    username: root
+    password: root
+  mvc:
+    pathmatch:
+      matching-strategy: ant-path-matcher
+
+jwt:
+  secret: k205j@dkjf0%^@
+  expiration: 330000
+
+
+cb:
+  url: https://cb.am/latest.json.php
+
