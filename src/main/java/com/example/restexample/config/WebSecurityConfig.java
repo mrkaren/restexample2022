@@ -35,7 +35,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/authors").hasAuthority(Role.ADMIN.name())
+//                .antMatchers("/authors").hasAuthority(Role.ADMIN.name())
                 .antMatchers("/books").authenticated()
                 .anyRequest().permitAll();
 

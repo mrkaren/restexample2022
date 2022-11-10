@@ -3,6 +3,7 @@ package com.example.restexample.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -19,6 +20,7 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @Entity
 @Table(name = "author")
+@Builder
 public class Author {
 
     @Id

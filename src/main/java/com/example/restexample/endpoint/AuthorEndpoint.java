@@ -35,7 +35,7 @@ public class AuthorEndpoint {
     )
     @GetMapping("/authors")
     public List<AuthorResponseDto> getAllAuthors(@AuthenticationPrincipal CurrentUser currentUser) {
-        log.info("endpoint /authors called by {}", currentUser.getUser().getEmail());
+//        log.info("endpoint /authors called by {}", currentUser.getUsername());
         return authorMapper.map(authorRepository.findAll());
     }
 
