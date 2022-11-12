@@ -1,7 +1,9 @@
 package com.example.restexample.endpoint;
 
+import com.example.restexample.exception.EntityNotFoundException;
 import com.example.restexample.model.Book;
 import com.example.restexample.repository.BookRepository;
+import com.example.restexample.service.BookService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import javax.validation.Valid;
 import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.List;
@@ -24,6 +27,8 @@ public class BookEndpoint {
 
     private final BookRepository bookRepository;
     private final RestTemplate restTemplate;
+
+    private final BookService bookService;
 
     @GetMapping("/books")
     public List<Book> getAllBooks() {
@@ -48,13 +53,12 @@ public class BookEndpoint {
     }
 
     @GetMapping("/books/{id}")
-    public ResponseEntity<Book> getBookById(@PathVariable("id") int id) {
-        Optional<Book> byId = bookRepository.findById(id);
-        return byId.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<Book> getBookById(@PathVariable("id") int id) throws EntityNotFoundException {
+        return ResponseEntity.ok(bookService.getById(id));
     }
 
     @PostMapping("/books")
-    public ResponseEntity<?> createBook(@RequestBody Book book) {
+    public ResponseEntity<?> createBook(@RequestBody @Valid Book book) {
         bookRepository.save(book);
         return ResponseEntity.noContent().build();
     }

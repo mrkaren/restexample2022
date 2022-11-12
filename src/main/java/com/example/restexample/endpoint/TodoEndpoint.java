@@ -1,6 +1,7 @@
 package com.example.restexample.endpoint;
 
 import com.example.restexample.dto.ToDoDto;
+import com.example.restexample.exception.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,12 +30,12 @@ public class TodoEndpoint {
     }
 
     @GetMapping("/todos/{id}")
-    public ResponseEntity<ToDoDto> getTodoById(@PathVariable("id") int id) {
+    public ResponseEntity<ToDoDto> getTodoById(@PathVariable("id") int id) throws EntityNotFoundException {
         ResponseEntity<ToDoDto> responseEntity = restTemplate.getForEntity("https://jsonplaceholder.typicode.com/todos/" + id, ToDoDto.class);
         if (responseEntity.hasBody()) {
             return ResponseEntity.ok(responseEntity.getBody());
         }
-        return ResponseEntity.notFound().build();
+        throw new EntityNotFoundException("Todo with " + id + " does not exists");
     }
 
 }
